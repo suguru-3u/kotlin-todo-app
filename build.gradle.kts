@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
     testImplementation(kotlin("test"))
 }
 
