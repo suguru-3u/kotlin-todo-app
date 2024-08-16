@@ -1,29 +1,22 @@
 package org.example
 
-import org.example.config.dbConnection
-import java.util.Scanner
+import org.example.config.KoinConfig.koinPracticModeules
+import org.example.presentation.TodoApp
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
-//TIP コードを<b>実行</b>するには、<shortcut actionId="Run"/> を押すか
-// ガターの <icon src="AllIcons.Actions.Execute"/> アイコンをクリックします。
 fun main() {
     println("Hello Kotlin TODO APP")
 
-    var appEndFlg = false
-    val dbConnection = dbConnection()
-    dbConnection.connection()
-    while (!appEndFlg) {
-        System.out.println("TODOをどうしますか？")
-        println("登録している一覧を確認するには、「１」、新規登録する場合は「２」、アプリを終了する場合は「３」を入力してください")
-        val scan = Scanner(System.`in`)
-        val selectCommand = scan.next()
-        if (selectCommand.equals("1")) {
-            println("一覧はこちらです")
-        }
-        // DBと接続するクラスを作成
-        // アプリ起動時にDBと接続するようにする
-
-
-        appEndFlg = true
+    // アプリケーション開始時にKoinを起動
+    startKoin {
+        modules(koinPracticModeules)
     }
-    dbConnection.close()
+
+    val todoApp = TodoApp()
+    todoApp.app()
+
+    // アプリケーション終了時にKoinを停止
+    stopKoin()
 }
+

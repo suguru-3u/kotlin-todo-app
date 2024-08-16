@@ -8,7 +8,11 @@ class dbConnection {
     private val url: String
     private val user: String
     private val password: String
-    private var connection: Connection? = null
+    var connection: Connection? = null
+        get() {
+            val field1 = field
+            return field1
+        }
 
     init {
         println("DB初期化処理開始")
@@ -24,7 +28,7 @@ class dbConnection {
         println("DB初期化処理成功")
     }
 
-    fun connection() {
+    fun opean() {
         println("DB接続開始")
         try {
              this.connection =
@@ -33,7 +37,7 @@ class dbConnection {
                     this.user,
                     this.password
                 )
-            println("DB接続成功。")
+            println("DB接続成功")
         }catch (err: Exception) {
             println(err)
             println("DB接続処理に失敗しました")
@@ -44,7 +48,7 @@ class dbConnection {
         println("DB接続解除開始")
         try {
             this.connection?.close()
-            println("DB接続解除成功。")
+            println("DB接続解除成功")
         }catch (err: Exception) {
             println(err)
             println("DB接続解除処理に失敗しました")

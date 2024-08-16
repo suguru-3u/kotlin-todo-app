@@ -11,6 +11,10 @@ repositories {
 
 dependencies {
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
+    // DIライブラリ
+    implementation("io.insert-koin:koin-core:3.4.0")
+    // DBライブラリ
+    implementation("mysql:mysql-connector-java:8.0.30")
     testImplementation(kotlin("test"))
 }
 
