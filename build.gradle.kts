@@ -14,7 +14,7 @@ dependencies {
     // DIライブラリ
     implementation("io.insert-koin:koin-core:3.4.0")
     // DBライブラリ
-    implementation("mysql:mysql-connector-java:8.0.30")
+    implementation("mysql:mysql-connector-java:8.0.33")
     testImplementation(kotlin("test"))
 }
 
