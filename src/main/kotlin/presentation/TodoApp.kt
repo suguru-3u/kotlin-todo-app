@@ -5,15 +5,17 @@ import org.koin.core.component.inject
 import org.example.service.TodoService
 import java.util.*
 
-class TodoApp:KoinComponent {
+class TodoApp : KoinComponent {
     private val todoService: TodoService by inject()
 
     fun app() {
 
         var appEndFlg = false
         while (!appEndFlg) {
-            println("TODOをどうしますか？")
+            println("")
             println("登録している一覧を確認するには、「１」、新規登録する場合は「２」、アプリを終了する場合は「３」を入力してください")
+            println("")
+
             val scan = Scanner(System.`in`)
             val selectCommand = scan.next()
             if (selectCommand.equals("1")) {
@@ -24,7 +26,10 @@ class TodoApp:KoinComponent {
             }
             // DBと接続するクラスを作成
             // アプリ起動時にDBと接続するようにする
-            appEndFlg = true
+
+            if (selectCommand.equals("3")) {
+                appEndFlg = true
+            }
         }
     }
 }

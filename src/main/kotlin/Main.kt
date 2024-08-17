@@ -18,5 +18,6 @@ fun main() {
 
     // アプリケーション終了時にKoinを停止
     stopKoin()
+    println("アプリを終了します")
 }
 
