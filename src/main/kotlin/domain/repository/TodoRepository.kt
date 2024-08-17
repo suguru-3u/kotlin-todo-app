@@ -4,4 +4,5 @@ import org.example.domain.model.Todo
 
 interface TodoRepository {
     fun getTodoLists(): MutableList<Todo>
+    fun registerTodo()
 }

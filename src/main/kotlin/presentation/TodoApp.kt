@@ -19,10 +19,12 @@ class TodoApp : KoinComponent {
             val scan = Scanner(System.`in`)
             val selectCommand = scan.next()
             if (selectCommand.equals("1")) {
-                println("一覧はこちらです")
-                val res =
+                val todos =
                     todoService.getTodoLists()
-                println(res)
+                println("")
+                println("登録しているTODO一覧")
+                println("")
+                todos.forEach{ it.print()}
             }
             // DBと接続するクラスを作成
             // アプリ起動時にDBと接続するようにする
