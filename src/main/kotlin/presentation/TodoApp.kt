@@ -1,5 +1,6 @@
 package org.example.presentation
 
+import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.example.service.TodoService
@@ -25,6 +26,16 @@ class TodoApp : KoinComponent {
                 println("登録しているTODO一覧")
                 println("")
                 todos.forEach{ it.print()}
+            }
+            if(selectCommand.equals("2")){
+                println("")
+                println("登録したいTODOを入力してください")
+                println("")
+                val inputTodo =  Scanner(System.`in`).next()
+                val todoFrom = TodoForm(inputTodo)
+                if(todoFrom.validationResult){
+                    println("再度入力してください")
+                }
             }
             // DBと接続するクラスを作成
             // アプリ起動時にDBと接続するようにする
