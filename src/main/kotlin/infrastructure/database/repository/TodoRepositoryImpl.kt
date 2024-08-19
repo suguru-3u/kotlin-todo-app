@@ -3,6 +3,7 @@ package org.example.infrastructure.database.repository
 import org.example.config.dbConnection
 import org.example.domain.model.Todo
 import org.example.domain.repository.TodoRepository
+import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.sql.SQLException
@@ -13,7 +14,6 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
     override fun getTodoLists(): MutableList<Todo> {
         val todoLists: MutableList<Todo> = mutableListOf()
         try {
-            dbConnection.opean()
             val statement = dbConnection.connection?.createStatement()
             statement?.executeQuery("select * from posts")?.let {
                 while (it.next()) {
@@ -28,23 +28,20 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
             e.printStackTrace()
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-            dbConnection.close()
         }
         return todoLists
     }
 
-    override fun registerTodo() {
+    override fun registerTodo(todoForm:TodoForm) {
         try {
-            dbConnection.opean()
-            val statement = dbConnection.connection?.createStatement()
-            val result = statement?.executeQuery("select * from posts")
+            val query = "insert into posts (title) values (?)"
+            val preparedStatement = dbConnection.connection?.prepareStatement(query)
+            preparedStatement?.setString(1, todoForm.title)
+            preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
             e.printStackTrace()
         } catch (e: Exception) {
             e.printStackTrace()
-        } finally {
-            dbConnection.close()
         }
     }
 }

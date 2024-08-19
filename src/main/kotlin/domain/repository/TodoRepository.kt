@@ -1,8 +1,9 @@
 package org.example.domain.repository
 
 import org.example.domain.model.Todo
+import org.example.presentation.form.TodoForm
 
 interface TodoRepository {
     fun getTodoLists(): MutableList<Todo>
-    fun registerTodo()
+    fun registerTodo(todoForm: TodoForm)
 }

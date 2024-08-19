@@ -28,7 +28,7 @@ class dbConnection {
         println("DB初期化処理成功")
     }
 
-    fun opean() {
+    fun open() {
         println("DB接続開始")
         try {
              this.connection =
