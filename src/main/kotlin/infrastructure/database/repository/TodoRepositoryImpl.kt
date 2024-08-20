@@ -16,12 +16,14 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
         try {
             val statement = dbConnection.connection?.createStatement()
             statement?.executeQuery("select * from posts")?.let {
+                var indexNum = 1
                 while (it.next()) {
                     todoLists.add(
                         Todo(
-                            it.getLong(1), it.getString(2)
+                            indexNum.toLong(), it.getString(2), it.getLong(1)
                         )
                     )
+                    indexNum++
                 }
             }
         } catch (e: SQLException) {
@@ -32,10 +34,11 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
         return todoLists
     }
 
-    override fun registerTodo(todoForm:TodoForm) {
+    override fun registerTodo(todoForm: TodoForm) {
         try {
             val query = "insert into posts (title) values (?)"
-            val preparedStatement = dbConnection.connection?.prepareStatement(query)
+            val preparedStatement =
+                dbConnection.connection?.prepareStatement(query)
             preparedStatement?.setString(1, todoForm.title)
             preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
