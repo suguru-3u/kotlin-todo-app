@@ -1,6 +1,5 @@
 package org.example.domain.repository
 
-import org.example.domain.model.Todo
 import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
 import java.sql.ResultSet

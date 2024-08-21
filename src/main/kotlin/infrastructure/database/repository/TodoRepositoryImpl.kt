@@ -1,7 +1,6 @@
 package org.example.infrastructure.database.repository
 
 import org.example.config.dbConnection
-import org.example.domain.model.Todo
 import org.example.domain.repository.TodoRepository
 import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
