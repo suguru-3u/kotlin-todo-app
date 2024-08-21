@@ -51,9 +51,13 @@ class TodoApp : KoinComponent {
         todos.forEach { it.print() }
     }
 
-    private fun registerTodo() {
+    private fun inputTodo(): String {
         println("\n登録したいTODOを入力してください\n")
-        val inputTodo = scanner.next()
+        return scanner.nextLine()
+    }
+
+    private fun registerTodo() {
+        val inputTodo = inputTodo()
         val todoForm = TodoForm(inputTodo)
 
         if (todoForm.valResult) {
@@ -68,7 +72,8 @@ class TodoApp : KoinComponent {
         } else {
             println("TODOの登録をキャンセルしました")
         }
-        println("機能の選択に戻ります")
+
+        println("メニューに戻ります")
     }
 
     private fun editTodo() {
@@ -85,12 +90,12 @@ class TodoApp : KoinComponent {
         }
 
         val findTodo = todos.firstOrNull { it.postId == inputTodoId }
-        if (findTodo != null) {
+        findTodo?.let {
+            println("選択したID： ${findTodo.postId}")
             println("選択したTODO： ${findTodo.title}")
             println("選択内容に問題なければ「1」を入力してください。登録しない場合は「1」以外を入力してください")
             if (scanner.next() == "1") {
-                println("\n登録したいTODOを入力してください\n")
-                val inputTodo = scanner.next()
+                val inputTodo = inputTodo()
                 val editTodoForm = EditTodoForm(findTodo.dbId, inputTodo)
 
                 if (editTodoForm.valResult) {
@@ -101,14 +106,13 @@ class TodoApp : KoinComponent {
                 println("入力内容に問題なければ「1」を入力してください。登録しない場合は「1」以外を入力してください")
                 if (scanner.next() == "1") {
                     todoService.editTodo(editTodoForm)
+                    println("更新が成功しました")
                 }
             } else {
                 println("編集がキャンセルされました")
             }
-        } else {
-            println("指定されたIDのTODOが見つかりません")
-        }
+        } ?: println("指定されたIDのTODOが見つかりません")
 
-        println("機能の選択に戻ります")
+        println("メニューに戻ります")
     }
 }

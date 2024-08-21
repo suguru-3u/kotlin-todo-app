@@ -11,7 +11,24 @@ class TodoService : KoinComponent {
     private val todoRepository: TodoRepository by inject()
 
     fun getTodoLists(): MutableList<Todo> {
-        return todoRepository.getTodoLists()
+        val result = todoRepository.getTodoLists()
+        val todoLists: MutableList<Todo> = mutableListOf()
+
+        result?.let {
+            var indexNum = 1
+            while (it.next()) {
+                todoLists.add(
+                    Todo(
+                        postId = indexNum.toLong(),
+                        title = it.getString(2),
+                        dbId = it.getLong(1)
+                    )
+                )
+                indexNum++
+            }
+        }
+
+        return todoLists
     }
 
     fun registerTodo(todoForm: TodoForm) {

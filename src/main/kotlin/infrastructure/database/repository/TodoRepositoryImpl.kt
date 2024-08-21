@@ -7,32 +7,23 @@ import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.sql.ResultSet
 import java.sql.SQLException
 
 class TodoRepositoryImpl : KoinComponent, TodoRepository {
     private val dbConnection: dbConnection by inject()
 
-    override fun getTodoLists(): MutableList<Todo> {
-        val todoLists: MutableList<Todo> = mutableListOf()
+    override fun getTodoLists(): ResultSet? {
         try {
             val statement = dbConnection.connection?.createStatement()
-            statement?.executeQuery("select * from posts")?.let {
-                var indexNum = 1
-                while (it.next()) {
-                    todoLists.add(
-                        Todo(
-                            indexNum.toLong(), it.getString(2), it.getLong(1)
-                        )
-                    )
-                    indexNum++
-                }
-            }
+            return statement?.executeQuery("select * from posts")
         } catch (e: SQLException) {
             e.printStackTrace()
+            throw e
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
-        return todoLists
     }
 
     override fun registerTodo(todoForm: TodoForm) {
@@ -44,8 +35,10 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
             preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
             e.printStackTrace()
+            throw e
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
@@ -59,8 +52,10 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
             preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
             e.printStackTrace()
+            throw e
         } catch (e: Exception) {
             e.printStackTrace()
+            throw e
         }
     }
 
