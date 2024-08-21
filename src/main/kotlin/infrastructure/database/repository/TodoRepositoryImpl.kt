@@ -3,6 +3,7 @@ package org.example.infrastructure.database.repository
 import org.example.config.dbConnection
 import org.example.domain.model.Todo
 import org.example.domain.repository.TodoRepository
+import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -47,4 +48,20 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
             e.printStackTrace()
         }
     }
+
+    override fun editTodo(editTodoForm: EditTodoForm) {
+        try {
+            val query = "update posts set title = (?) where post_id = (?)"
+            val preparedStatement =
+                dbConnection.connection?.prepareStatement(query)
+            preparedStatement?.setString(1, editTodoForm.title)
+            preparedStatement?.setLong(2, editTodoForm.id)
+            preparedStatement?.executeUpdate()
+        } catch (e: SQLException) {
+            e.printStackTrace()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 }

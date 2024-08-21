@@ -8,7 +8,5 @@ data class Todo(
     fun print(){
         println("ID:${postId}")
         println("Todo:${title}")
-        println("Todo:${dbId}")
-        println("")
     }
 }
