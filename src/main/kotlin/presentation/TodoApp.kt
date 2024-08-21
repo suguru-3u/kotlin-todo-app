@@ -52,8 +52,8 @@ class TodoApp : KoinComponent {
     }
 
     private fun inputTodo(): String {
-        println("\n登録したいTODOを入力してください\n")
-        return scanner.nextLine()
+        println("\n登録・編集したいTODOを入力してください\n")
+        return scanner.next()
     }
 
     private fun registerTodo() {
