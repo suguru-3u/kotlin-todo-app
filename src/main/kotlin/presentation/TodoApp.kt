@@ -1,6 +1,5 @@
 package org.example.presentation
 
-import org.example.domain.model.Todo
 import org.example.config.dbConnection
 import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
