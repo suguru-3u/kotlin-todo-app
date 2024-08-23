@@ -2,6 +2,7 @@ package org.example.infrastructure.database.repository
 
 import org.example.config.dbConnection
 import org.example.domain.repository.TodoRepository
+import org.example.presentation.form.DeleteTodoForm
 import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
@@ -56,6 +57,23 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
             e.printStackTrace()
             throw e
         }
+    }
+
+    override fun deleteTodo(deleteTodoForm: DeleteTodoForm) {
+        try {
+            val query = "update posts set delete_flg = true where post_id = (?)"
+            val preparedStatement =
+                dbConnection.connection?.prepareStatement(query)
+            preparedStatement?.setLong(1, deleteTodoForm.id)
+            preparedStatement?.executeUpdate()
+        } catch (e: SQLException) {
+            e.printStackTrace()
+            throw e
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
+        }
+
     }
 
 }

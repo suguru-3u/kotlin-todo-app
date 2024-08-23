@@ -2,6 +2,7 @@ package org.example.service
 
 import org.example.domain.model.Todo
 import org.example.domain.repository.TodoRepository
+import org.example.presentation.form.DeleteTodoForm
 import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
@@ -37,5 +38,9 @@ class TodoService : KoinComponent {
 
     fun editTodo(editTodoForm: EditTodoForm) {
         todoRepository.editTodo(editTodoForm)
+    }
+
+    fun deleteTodo(deleteTodoForm: DeleteTodoForm){
+        todoRepository.deleteTodo(deleteTodoForm)
     }
 }
