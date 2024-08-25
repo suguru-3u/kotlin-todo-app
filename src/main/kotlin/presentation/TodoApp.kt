@@ -1,6 +1,7 @@
 package org.example.presentation
 
 import org.example.config.dbConnection
+import org.example.domain.model.Todo
 import org.example.presentation.form.DeleteTodoForm
 import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
@@ -51,7 +52,11 @@ class TodoApp : KoinComponent {
     private fun displayTodoList() {
         val todos = todoService.getTodoLists()
         println("\n登録しているTODO一覧\n")
-        todos.forEach { it.print() }
+        if(todos.isEmpty()){
+            println("登録されているTODOはありません")
+        }else{
+            todos.forEach(Todo::print)
+        }
     }
 
     private fun inputTodo(): String {

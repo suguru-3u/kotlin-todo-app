@@ -16,7 +16,7 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
     override fun getTodoLists(): ResultSet? {
         try {
             val statement = dbConnection.connection?.createStatement()
-            return statement?.executeQuery("select * from posts")
+            return statement?.executeQuery("select * from posts where delete_flg = false")
         } catch (e: SQLException) {
             e.printStackTrace()
             throw e
