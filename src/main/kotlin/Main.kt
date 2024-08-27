@@ -1,7 +1,7 @@
 package org.example
 
 import org.example.config.KoinConfig.koinPracticModeules
-import org.example.presentation.TodoApp
+import org.example.presentation.controller.TodoApp
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 

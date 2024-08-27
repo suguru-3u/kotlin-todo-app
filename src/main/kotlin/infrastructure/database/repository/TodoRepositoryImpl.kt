@@ -7,6 +7,7 @@ import org.example.presentation.form.EditTodoForm
 import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.sql.Date
 import java.sql.ResultSet
 import java.sql.SQLException
 import java.time.OffsetDateTime
@@ -29,13 +30,12 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
 
     override fun registerTodo(todoForm: TodoForm) {
         try {
-            // TODO:完了日時も登録できるようにSQLの修正を実施
             val query =
                 "insert into posts (title,target_complete_date) values (?, ?) "
             val preparedStatement =
                 dbConnection.connection?.prepareStatement(query)
             preparedStatement?.setString(1, todoForm.title)
-            preparedStatement?.setString(2, todoForm.inputDate.toString())
+            preparedStatement?.setDate(2, Date.valueOf(todoForm.inputDate))
             preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
             e.printStackTrace()
@@ -48,15 +48,15 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
 
     override fun editTodo(editTodoForm: EditTodoForm) {
         try {
-            // TODO:完了日時・更新日時もアップデートするようにSQLを更新
             val now = OffsetDateTime.now()
             val query =
-                "update posts set title = (?) , update_date = (?) where post_id = (?)"
+                "update posts set title = (?) , target_complete_date = (?), update_date = (?) where post_id = (?)"
             val preparedStatement =
                 dbConnection.connection?.prepareStatement(query)
             preparedStatement?.setString(1, editTodoForm.title)
-            preparedStatement?.setString(2, now.toString())
-            preparedStatement?.setLong(3, editTodoForm.id)
+            preparedStatement?.setDate(2, Date.valueOf(editTodoForm.inputDate))
+            preparedStatement?.setString(3, now.toString())
+            preparedStatement?.setLong(4, editTodoForm.id)
             preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
             e.printStackTrace()

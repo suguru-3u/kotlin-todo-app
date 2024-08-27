@@ -22,7 +22,9 @@ class TodoService : KoinComponent {
                     Todo(
                         postId = indexNum.toLong(),
                         title = it.getString(2),
-                        dbId = it.getLong(1)
+                        dbId = it.getLong(1),
+                        finishDate = it.getTimestamp(3).toLocalDateTime()
+                            .toLocalDate()
                     )
                 )
                 indexNum++
@@ -40,7 +42,7 @@ class TodoService : KoinComponent {
         todoRepository.editTodo(editTodoForm)
     }
 
-    fun deleteTodo(deleteTodoForm: DeleteTodoForm){
+    fun deleteTodo(deleteTodoForm: DeleteTodoForm) {
         todoRepository.deleteTodo(deleteTodoForm)
     }
 }
