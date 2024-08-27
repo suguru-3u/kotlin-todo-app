@@ -1,4 +1,4 @@
-package org.example.presentation
+package org.example.presentation.controller
 
 import org.example.config.dbConnection
 import org.example.domain.model.Todo
@@ -79,7 +79,10 @@ class TodoApp : KoinComponent {
                 val day = inputPrompt("「日」を入力してください")
                 LocalDate.of(year, month, day)
             }.getOrElse { err ->
-                throw IllegalArgumentException("無効な入力です。半角数字を入力してください", err)
+                throw IllegalArgumentException(
+                    "無効な入力です。半角数字を入力してください",
+                    err
+                )
             }
         }
     }
@@ -117,43 +120,48 @@ class TodoApp : KoinComponent {
     }
 
     private fun editTodo() {
-        val todos = todoService.getTodoLists()
-        println("\n登録しているTODO一覧\n")
-        todos.forEach { it.print() }
+        try {
+            val todos = todoService.getTodoLists()
+            println("\n登録しているTODO一覧\n")
+            todos.forEach { it.print() }
 
-        println("\n編集したいTODOのID入力してください\n")
-        val inputTodoId = try {
-            scanner.next().toLong()
-        } catch (e: NumberFormatException) {
-            println("無効なIDです。半角数字を入力してください")
-            return
-        }
-
-        val findTodo = todos.firstOrNull { it.postId == inputTodoId }
-        findTodo?.let {
-            println("選択したID： ${findTodo.postId}")
-            println("選択したTODO： ${findTodo.title}")
-            println("選択内容に問題なければ「1」を入力してください。編集しない場合は「1」以外を入力してください")
-            if (scanner.next() == "1") {
-                val inputTodo = inputTodo()
-                val editTodoForm = EditTodoForm(findTodo.dbId, inputTodo)
-
-                if (editTodoForm.valResult) {
-                    println("再度入力してください")
-                    return
-                }
-
-                println("入力内容に問題なければ「1」を入力してください。編集しない場合は「1」以外を入力してください")
-                if (scanner.next() == "1") {
-                    todoService.editTodo(editTodoForm)
-                    println("更新が成功しました")
-                }
-            } else {
-                println("編集がキャンセルされました")
+            println("\n編集したいTODOのID入力してください\n")
+            val inputTodoId = try {
+                scanner.next().toLong()
+            } catch (e: NumberFormatException) {
+                println("無効なIDです。半角数字を入力してください")
+                return
             }
-        } ?: println("指定されたIDのTODOが見つかりません")
 
-        println("メニューに戻ります")
+            val findTodo = todos.firstOrNull { it.postId == inputTodoId }
+            findTodo?.let {
+                findTodo.print()
+                println("選択内容に問題なければ「1」を入力してください。編集しない場合は「1」以外を入力してください")
+                if (scanner.next() == "1") {
+                    val inputTodo = inputTodo()
+                    val inputDate = inputDate()
+                    val editTodoForm = EditTodoForm(findTodo.dbId, inputTodo,inputDate)
+
+                    if (editTodoForm.valResult) {
+                        println("再度入力してください")
+                        return
+                    }
+
+                    println("入力内容に問題なければ「1」を入力してください。編集しない場合は「1」以外を入力してください")
+                    if (scanner.next() == "1") {
+                        todoService.editTodo(editTodoForm)
+                        println("更新が成功しました")
+                    }
+                } else {
+                    println("編集がキャンセルされました")
+                }
+            } ?: println("指定されたIDのTODOが見つかりません")
+        } catch (err: Exception) {
+            println(err.message)
+            println("編集に失敗しました。再度試してください")
+        } finally {
+            println("メニューに戻ります")
+        }
     }
 
     private fun deleteTodo() {
