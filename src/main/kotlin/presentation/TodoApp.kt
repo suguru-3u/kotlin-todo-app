@@ -8,6 +8,7 @@ import org.example.presentation.form.TodoForm
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.example.service.TodoService
+import java.time.LocalDate
 import java.util.Scanner
 
 class TodoApp : KoinComponent {
@@ -49,12 +50,13 @@ class TodoApp : KoinComponent {
         )
     }
 
+    // TODO:完了日時が何件すぎているのか件数が出るように修正を実施
     private fun displayTodoList() {
         val todos = todoService.getTodoLists()
         println("\n登録しているTODO一覧\n")
-        if(todos.isEmpty()){
+        if (todos.isEmpty()) {
             println("登録されているTODOはありません")
-        }else{
+        } else {
             todos.forEach(Todo::print)
         }
     }
@@ -64,24 +66,54 @@ class TodoApp : KoinComponent {
         return scanner.next()
     }
 
-    private fun registerTodo() {
-        val inputTodo = inputTodo()
-        val todoForm = TodoForm(inputTodo)
+    private fun inputDate(): LocalDate {
+        println("完了日を入力してください")
+        println("本日完了予定の場合「1」を入力してください。「1」以外の場合、完了予定日の入力を行います")
 
-        if (todoForm.valResult) {
-            println("再度入力してください")
-            return
-        }
-
-        println("入力内容に問題なければ「1」を入力してください。登録しない場合は「1」以外を入力してください")
-        if (scanner.next() == "1") {
-            todoService.registerTodo(todoForm)
-            println("TODOが登録されました")
+        return if (scanner.next() == "1") {
+            LocalDate.now()
         } else {
-            println("TODOの登録をキャンセルしました")
+            runCatching {
+                val year = inputPrompt("「年」を入力してください")
+                val month = inputPrompt("「月」を入力してください")
+                val day = inputPrompt("「日」を入力してください")
+                LocalDate.of(year, month, day)
+            }.getOrElse { err ->
+                throw IllegalArgumentException("無効な入力です。半角数字を入力してください", err)
+            }
         }
+    }
 
-        println("メニューに戻ります")
+    private fun inputPrompt(message: String): Int {
+        println(message)
+        return scanner.next().toInt()
+    }
+
+    private fun registerTodo() {
+        try {
+            val inputTodo = inputTodo()
+            val inputDate = inputDate()
+            val todoForm = TodoForm(inputTodo, inputDate)
+
+            if (todoForm.valResult) {
+                println("入力に問題があります。再度入力してください")
+                return
+            }
+
+            println("入力内容に問題なければ「1」を入力してください。登録しない場合は「1」以外を入力してください")
+            if (scanner.next() == "1") {
+                todoService.registerTodo(todoForm)
+                println("TODOが登録されました")
+            } else {
+                println("TODOの登録をキャンセルしました")
+            }
+
+        } catch (err: Exception) {
+            println(err.message)
+            println("登録に失敗しました。再度試してください")
+        } finally {
+            println("メニューに戻ります")
+        }
     }
 
     private fun editTodo() {
@@ -124,7 +156,7 @@ class TodoApp : KoinComponent {
         println("メニューに戻ります")
     }
 
-    private fun deleteTodo(){
+    private fun deleteTodo() {
         val todos = todoService.getTodoLists()
         println("\n登録しているTODO一覧\n")
         todos.forEach { it.print() }
@@ -144,8 +176,8 @@ class TodoApp : KoinComponent {
             println("選択内容に問題なければ「1」を入力してください。削除しない場合は「1」以外を入力してください")
             if (scanner.next() == "1") {
                 val deleteTodoForm = DeleteTodoForm(findTodo.dbId)
-                    todoService.deleteTodo(deleteTodoForm)
-                    println("削除が成功しました")
+                todoService.deleteTodo(deleteTodoForm)
+                println("削除が成功しました")
 
             } else {
                 println("削除がキャンセルされました")

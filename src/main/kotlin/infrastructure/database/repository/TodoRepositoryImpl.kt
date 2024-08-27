@@ -9,6 +9,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.time.OffsetDateTime
 
 class TodoRepositoryImpl : KoinComponent, TodoRepository {
     private val dbConnection: dbConnection by inject()
@@ -28,10 +29,13 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
 
     override fun registerTodo(todoForm: TodoForm) {
         try {
-            val query = "insert into posts (title) values (?)"
+            // TODO:完了日時も登録できるようにSQLの修正を実施
+            val query =
+                "insert into posts (title,target_complete_date) values (?, ?) "
             val preparedStatement =
                 dbConnection.connection?.prepareStatement(query)
             preparedStatement?.setString(1, todoForm.title)
+            preparedStatement?.setString(2, todoForm.inputDate.toString())
             preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
             e.printStackTrace()
@@ -44,11 +48,15 @@ class TodoRepositoryImpl : KoinComponent, TodoRepository {
 
     override fun editTodo(editTodoForm: EditTodoForm) {
         try {
-            val query = "update posts set title = (?) where post_id = (?)"
+            // TODO:完了日時・更新日時もアップデートするようにSQLを更新
+            val now = OffsetDateTime.now()
+            val query =
+                "update posts set title = (?) , update_date = (?) where post_id = (?)"
             val preparedStatement =
                 dbConnection.connection?.prepareStatement(query)
             preparedStatement?.setString(1, editTodoForm.title)
-            preparedStatement?.setLong(2, editTodoForm.id)
+            preparedStatement?.setString(2, now.toString())
+            preparedStatement?.setLong(3, editTodoForm.id)
             preparedStatement?.executeUpdate()
         } catch (e: SQLException) {
             e.printStackTrace()
