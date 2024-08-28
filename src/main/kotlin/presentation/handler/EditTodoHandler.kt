@@ -14,7 +14,6 @@ import java.util.*
 class EditTodoHandler : KoinComponent {
 
     private val todoService: TodoService by inject()
-    private val scanner = Scanner(System.`in`)
 
     fun editTodo() {
         try {

@@ -1,10 +1,6 @@
 package org.example.presentation.controller
 
 import org.example.config.dbConnection
-import org.example.domain.model.Todo
-import org.example.presentation.form.DeleteTodoForm
-import org.example.presentation.form.EditTodoForm
-import org.example.presentation.form.TodoForm
 import org.example.presentation.handler.DisplayTodoHandler
 import org.example.presentation.handler.EditTodoHandler
 import org.example.presentation.handler.RegisterTodoHandler
@@ -12,12 +8,10 @@ import org.example.presentation.handler.DeleteTodoHandler
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.example.service.TodoService
-import java.time.LocalDate
 import java.util.Scanner
 
 class TodoApp : KoinComponent {
 
-    private val todoService: TodoService by inject()
     private val dbConnection: dbConnection by inject()
     private val scanner = Scanner(System.`in`)
 
