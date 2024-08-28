@@ -7,7 +7,6 @@ import org.example.presentation.handler.RegisterTodoHandler
 import org.example.presentation.handler.DeleteTodoHandler
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.example.service.TodoService
 import java.util.Scanner
 
 class TodoApp : KoinComponent {
