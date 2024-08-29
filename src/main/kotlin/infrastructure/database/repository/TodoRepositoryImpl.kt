@@ -1,6 +1,6 @@
 package org.example.infrastructure.database.repository
 
-import org.example.config.dbConnection
+import org.example.config.DBConnection
 import org.example.domain.repository.TodoRepository
 import org.example.presentation.form.DeleteTodoForm
 import org.example.presentation.form.EditTodoForm
@@ -13,7 +13,7 @@ import java.sql.SQLException
 import java.time.OffsetDateTime
 
 class TodoRepositoryImpl : KoinComponent, TodoRepository {
-    private val dbConnection: dbConnection by inject()
+    private val dbConnection: DBConnection by inject()
 
     override fun getTodoLists(): ResultSet? {
         try {

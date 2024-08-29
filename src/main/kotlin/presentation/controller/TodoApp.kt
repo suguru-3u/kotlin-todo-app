@@ -1,6 +1,6 @@
 package org.example.presentation.controller
 
-import org.example.config.dbConnection
+import org.example.config.DBConnection
 import org.example.presentation.handler.DisplayTodoHandler
 import org.example.presentation.handler.EditTodoHandler
 import org.example.presentation.handler.RegisterTodoHandler
@@ -11,7 +11,7 @@ import java.util.Scanner
 
 class TodoApp : KoinComponent {
 
-    private val dbConnection: dbConnection by inject()
+    private val dbConnection: DBConnection by inject()
     private val scanner = Scanner(System.`in`)
 
     fun app() {

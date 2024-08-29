@@ -4,7 +4,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 import io.github.cdimascio.dotenv.dotenv
 
-class dbConnection {
+class DBConnection {
     private val url: String
     private val user: String
     private val password: String
