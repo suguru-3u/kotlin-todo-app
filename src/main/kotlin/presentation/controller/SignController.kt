@@ -9,7 +9,6 @@ import java.util.*
 
 class SignController : KoinComponent {
 
-    private val dbConnection: DBConnection by inject()
     private val signInHandler: SignInHandler by inject()
     private val scanner = Scanner(System.`in`)
 

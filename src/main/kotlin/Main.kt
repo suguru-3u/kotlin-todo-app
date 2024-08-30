@@ -21,7 +21,7 @@ fun main() {
 
     // サインイン処理
     val signController = SignController()
-    var userInfo: User? = null
+    var userInfo: User?
     var nonLoginFlg = true
     while (nonLoginFlg) {
         userInfo = signController.app()
@@ -54,6 +54,4 @@ fun terminateKoin() {
 // KoinComponentを実装するクラスを作成
 class AppComponents : KoinComponent {
     val dbConnection: DBConnection by inject()
-    val signController: SignController by inject()
-    val todoApp: TodoApp by inject()
 }
