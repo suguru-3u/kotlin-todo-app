@@ -16,6 +16,9 @@ fun main() {
     // Koinの初期化
     initializeKoin()
 
+    val inputMessage = readln()
+    println(inputMessage)
+
     val appComponents = AppComponents()
     appComponents.dbConnection.open()
 
