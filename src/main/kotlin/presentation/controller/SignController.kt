@@ -14,9 +14,8 @@ class SignController : KoinComponent {
     private val scanner = Scanner(System.`in`)
 
     fun app(): User? {
-        dbConnection.open()
         var appEndFlg = false
-        var userInfo:User? = null
+        var userInfo: User? = null
         while (!appEndFlg) {
             println("ログインする場合は「1」、新規登録する場合は「2」を入力してください")
 
@@ -34,7 +33,6 @@ class SignController : KoinComponent {
             }
             println("メニュー選択に戻ります")
         }
-        dbConnection.close()
         return userInfo
     }
 }
