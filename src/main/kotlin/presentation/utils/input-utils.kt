@@ -1,7 +1,6 @@
 package org.example.presentation.utils
 
 import java.time.LocalDate
-import java.util.*
 
 fun inputTodo(): String {
     println("\n登録・編集したいTODOを入力してください\n")
@@ -29,15 +28,11 @@ fun confirm(): Boolean {
 
 fun inputPrompt(message: String): Int {
     println(message)
-    val inputDate = readln().toIntOrNull()
-    return inputDate
+    return readln().toIntOrNull()
         ?: throw IllegalArgumentException("無効な入力です。半角数半角数字を入力してください")
 }
 
-fun inputTodoId(): Long? {
-    return try {
-        readln().toLongOrNull()
-    } catch (e: NumberFormatException) {
-        throw NumberFormatException("無効なIDです。半角数字を入力してください")
-    }
+fun inputTodoId(): Long {
+    return readln().toLongOrNull()
+        ?: throw NumberFormatException("無効なIDです。半角数字を入力してください")
 }
