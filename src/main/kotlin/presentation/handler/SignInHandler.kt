@@ -5,18 +5,16 @@ import org.example.presentation.form.SignInForm
 import org.example.service.SignService
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.*
 
 class SignInHandler : KoinComponent {
 
     private val signService: SignService by inject()
-    private val scanner = Scanner(System.`in`)
 
-    fun signin(): User? {
+    fun signIn(): User? {
         println("登録しているemailを入力してください")
-        val inputEmail = scanner.next()
+        val inputEmail = readln()
         println("登録しているpasswordを入力してください")
-        val inputPassword = scanner.next()
+        val inputPassword = readln()
 
         val signInForm = SignInForm(inputEmail, inputPassword)
         println("こちらの内容で登録状況を確認します\n $signInForm")

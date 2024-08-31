@@ -7,12 +7,10 @@ import org.example.presentation.handler.RegisterTodoHandler
 import org.example.presentation.handler.DeleteTodoHandler
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.Scanner
 
-class TodoApp : KoinComponent {
+class TodoController : KoinComponent {
 
     private val dbConnection: DBConnection by inject()
-    private val scanner = Scanner(System.`in`)
 
     fun app() {
         dbConnection.open()
@@ -24,7 +22,7 @@ class TodoApp : KoinComponent {
 
         while (!appEndFlg) {
             printMenu()
-            when (scanner.next()) {
+            when (readln()) {
                 "1" -> displayTodoHandler.displayTodos()
                 "2" -> registerTodoHandler.registerTodo()
                 "3" -> editTodoHandler.editTodo()

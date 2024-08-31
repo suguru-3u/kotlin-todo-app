@@ -4,7 +4,7 @@ import org.example.config.DBConnection
 import org.example.config.KoinConfig.koinPracticModeules
 import org.example.domain.model.User
 import org.example.presentation.controller.SignController
-import org.example.presentation.controller.TodoApp
+import org.example.presentation.controller.TodoController
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.component.KoinComponent
@@ -15,9 +15,6 @@ fun main() {
 
     // Koinの初期化
     initializeKoin()
-
-    val inputMessage = readln()
-    println(inputMessage)
 
     val appComponents = AppComponents()
     appComponents.dbConnection.open()
@@ -35,8 +32,8 @@ fun main() {
     }
 
     // TODOアプリケーションの開始
-    val todoApp = TodoApp()
-    todoApp.app()
+    val todoController = TodoController()
+    todoController.app()
 
     // Koinの停止
     terminateKoin()
