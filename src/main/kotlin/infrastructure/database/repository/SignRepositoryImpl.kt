@@ -3,6 +3,7 @@ package org.example.infrastructure.database.repository
 import org.example.config.DBConnection
 import org.example.domain.repository.SignRepository
 import org.example.presentation.form.SignInForm
+import org.example.presentation.form.SignUpForm
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.sql.ResultSet
@@ -29,6 +30,24 @@ class SignRepositoryImpl : KoinComponent, SignRepository {
                 "ユーザー情報の取得に失敗しました： ${exception.message}",
                 exception
             )
+        }
+    }
+
+    override fun signUp(signUpForm: SignUpForm) {
+        try {
+            val query =
+                "insert into users (email,password) values (?, ?) "
+            val preparedStatement =
+                dbConnection.connection?.prepareStatement(query)
+            preparedStatement?.setString(1, signUpForm.email)
+            preparedStatement?.setString(2, signUpForm.password)
+            preparedStatement?.executeUpdate()
+        } catch (e: SQLException) {
+            e.printStackTrace()
+            throw e
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw e
         }
     }
 }
