@@ -1,6 +1,7 @@
 package org.example.config
 
 import org.example.presentation.handler.SignInHandler
+import org.example.presentation.handler.SignUpHandler
 import org.example.service.TodoService
 import org.example.service.SignService
 import org.example.domain.repository.SignRepository
@@ -18,6 +19,7 @@ object KoinConfig {
 
         // Handler
         singleOf(::SignInHandler)
+        singleOf(::SignUpHandler)
 
         // Service
         singleOf(::TodoService)

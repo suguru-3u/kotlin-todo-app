@@ -1,6 +1,7 @@
 package org.example.presentation.controller
 
 import org.example.domain.model.User
+import org.example.domain.model.UserId
 import org.example.presentation.handler.SignInHandler
 import org.example.presentation.handler.SignUpHandler
 import org.koin.core.component.KoinComponent
@@ -11,9 +12,9 @@ class SignController : KoinComponent {
     private val signInHandler: SignInHandler by inject()
     private val signUpHandler: SignUpHandler by inject()
 
-    fun app(): User? {
+    fun app(): UserId? {
         var nonLoginFlg = true
-        var userInfo: User? = null
+        var userInfo: UserId? = null
         while (nonLoginFlg) {
             println("ログインする場合は「1」、新規登録する場合は「2」を入力してください")
 

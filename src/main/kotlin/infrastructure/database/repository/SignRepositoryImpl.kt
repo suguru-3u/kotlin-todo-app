@@ -24,7 +24,7 @@ class SignRepositoryImpl : KoinComponent, SignRepository {
 
             preparedStatement.setString(1, signInForm.userEmail)
             preparedStatement.setString(2, signInForm.userPassword)
-            return preparedStatement.executeQuery()
+            preparedStatement.executeQuery()
         }.getOrElse { exception ->
             throw Exception(
                 "ユーザー情報の取得に失敗しました： ${exception.message}",
@@ -41,7 +41,8 @@ class SignRepositoryImpl : KoinComponent, SignRepository {
                 dbConnection.connection?.prepareStatement(query)
             preparedStatement?.setString(1, signUpForm.email)
             preparedStatement?.setString(2, signUpForm.password)
-            preparedStatement?.executeUpdate()
+            val res= preparedStatement?.executeUpdate()
+            println("実行結果： $res")
         } catch (e: SQLException) {
             e.printStackTrace()
             throw e
